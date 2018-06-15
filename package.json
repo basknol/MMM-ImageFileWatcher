@@ -1,0 +1,22 @@
+{
+  "name": "mmm-imagefilewatcher",
+  "version": "1.0.0",
+  "description": "Image file watcher module for MagicMirror2 - detects (on runtime) if image is added to (configured) folder(s) and shows image on Magic Mirror",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basknol/MMM-ImageFileWatcher.git"
+  },
+  "keywords": [
+    "MagicMirror",
+    "ImageFileWatcher"
+  ],
+  "author": "Bas Knol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/basknol/MMM-ImageFileWatcher/issues"
+  },
+  homepage": "https://github.com/basknol/MMM-ImageFileWatcher#readme",
+  "dependencies": {
+    "chokidar": "^2.0.3"
+  }
+}
