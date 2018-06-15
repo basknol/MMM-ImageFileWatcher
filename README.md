@@ -1,3 +1,1 @@
-﻿# MagicMirrorModules
-
-
+﻿# MMM-ImageFileWatcher
