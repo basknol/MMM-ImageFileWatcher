@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/basknol/MMM-ImageFileWatcher/issues"
   },
-  homepage": "https://github.com/basknol/MMM-ImageFileWatcher#readme",
+  "homepage": "https://github.com/basknol/MMM-ImageFileWatcher#readme",
   "dependencies": {
     "chokidar": "^2.0.3"
   }

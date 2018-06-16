@@ -7,13 +7,15 @@
 
 Module.register("MMM-ImageFileWatcher", {
     defaults: {
-        imagePaths: ['modules/MMM-ImageFileWatcher/Images'],
+        imagePaths: [],
         //If zero do nothing, otherwise set height to a pixel value        
-        fixedImageHeight: 500,
+        fixedHeight: 500,        
+        //If zero do nothing, otherwise set width to a pixel value
+        fixedWidth: 0,
         //Duration to show the images in milliseconds
         showtime: 10 * 1000,
         //Hide modules if we show images
-        hideModules: ['compliments', 'calendar', 'newsfeed'],
+        hideModules: [],
         //List of valid file extensions, seperated by commas
         validImageFileExtensions: 'bmp,jpg,gif,png',
 	},
@@ -43,11 +45,22 @@ Module.register("MMM-ImageFileWatcher", {
             //Get first image from array
             image.src = this.imageList.shift();
 
-            //Build image
-            if (this.config.fixedImageHeight > 0) {
-                wrapper.style = 'height:' + this.config.fixedImageHeight + 'px;';
-                image.style = "max-height: 100%; max-width: 100%;";                
+            var imageStyle = '';
+            //Set fixed image height
+            if (this.config.fixedHeight > 0) {
+                imageStyle += 'height:' + this.config.fixedHeight + 'px;';
             }
+
+            //Set fixed image width
+            if (this.config.fixedWidth > 0) {
+                imageStyle += 'width:' + this.config.fixedWidth + 'px;';
+            }
+
+            //Set image style
+            if (imageStyle != '') {
+                image.style = imageStyle;
+            }           
+
             wrapper.appendChild(image);
 
             //Hide modules if we need to

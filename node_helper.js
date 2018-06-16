@@ -39,33 +39,40 @@ module.exports = NodeHelper.create({
 
         //Check if we are already watching, avoid double events because of mirror refresh
         if (this.watching === false) {
-            console.log("Start watching: " + config.imagePaths);
 
-            // Initialize watcher passing array of paths
-            var watcher = chokidar.watch(config.imagePaths, {
-                ignored: /(^|[\/\\])\../, //ignore .dotfiles
-                ignoreInitial: true,
-                persistent: true
-            });
+            //Check if image paths are specified
+            if (config.imagePaths.length > 0) {
+                console.log("Start watching: " + config.imagePaths);
 
-            //Watch if files are added
-            watcher
-                .on('add', (path, stats) => {
-                    console.log(`File ${path} has been added`);
-                    //if (stats) console.log(`File ${path} changed size to ${stats.size}`);
+                // Initialize watcher passing array of paths
+                var watcher = chokidar.watch(config.imagePaths, {
+                    ignored: /(^|[\/\\])\../, //ignore .dotfiles
+                    ignoreInitial: true,
+                    persistent: true
+                });
 
-                    //Check if the file extension is valid
-                    if (self.checkValidImageFileExtension(path, config.validImageFileExtensions)) {
-                        //Wait a bit to avoid message: Error: EBUSY: resource busy or locked, open... o_O
-                        setTimeout(function () {
-                            self.sendSocketNotification("FILE_ADDED", path);
-                        }, 1000);
-                    }
-                })
-                .on('error', error => console.log(`MMM-ImageFileWacther error: ${error}`)); //Log errow
+                //Watch if files are added
+                watcher
+                    .on('add', (path, stats) => {
+                        console.log(`File ${path} has been added`);
+                        //if (stats) console.log(`File ${path} changed size to ${stats.size}`);
 
-            //Watching is set
-            this.watching = true;
+                        //Check if the file extension is valid
+                        if (self.checkValidImageFileExtension(path, config.validImageFileExtensions)) {
+                            //Wait a bit to avoid message: Error: EBUSY: resource busy or locked, open... o_O
+                            setTimeout(function () {
+                                self.sendSocketNotification("FILE_ADDED", path);
+                            }, 1000);
+                        }
+                    })
+                    .on('error', error => console.log(`MMM-ImageFileWacther error: ${error}`)); //Log errow
+
+                //Watching is set
+                this.watching = true;
+            }
+            else {
+                console.log("MMM-ImageFileWatcher: no image path(s) configured, no watcher active, no images will be shown. Please fill in an image path in the config of this module");
+            }
         }
     },
 
