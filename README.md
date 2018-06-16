@@ -1,7 +1,9 @@
 ﻿# Module: MMM-ImageFileWatcher
 
-This MagicMirror module watches one or multiple directories, this module displays an image for a specified number of seconds if an image is added to the watched directory. 
+This [MagicMirror²](https://github.com/MichMich/MagicMirror/) module watches one or multiple directories, this module displays an image for a specified number of seconds if an image is added to the watched directory. 
 For example an image uploaded via SFTP from your phone.
+
+Inspired by the [MMM-ImageSlideshow](https://github.com/AdamMoses-GitHub/MMM-ImageSlideshow) module created by GitHub user [Adam Moses](https://github.com/AdamMoses-GitHub)
 
 ## Dependencies / Requirements
 
@@ -18,6 +20,16 @@ cd ~/MagicMirror/modules
 Clone this repository:
 ````
 git clone https://github.com/basknol/MMM-ImageFileWatcher.git
+````
+
+Go to the MMM-ImageFileWatcher folder:
+````
+cd MMM-ImageFileWatcher
+````
+
+Install necessary dependencies:
+````
+npm install
 ````
 
 ## Using the module
