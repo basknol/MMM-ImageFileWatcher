@@ -1,7 +1,7 @@
 ﻿# Module: MMM-ImageFileWatcher
 
 This MagicMirror module watches one or multiple directories, this module displays an image for a specified number of seconds if an image is added to the watched directory. 
-For example an image uploaded via SFTP from you phone.
+For example an image uploaded via SFTP from your phone.
 
 ## Dependencies / Requirements
 
@@ -34,6 +34,7 @@ modules: [
 		}
 	}
 ]
+````
 
 ## Configuration options
 
