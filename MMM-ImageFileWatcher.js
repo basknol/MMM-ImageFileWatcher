@@ -17,7 +17,9 @@ Module.register("MMM-ImageFileWatcher", {
         //Hide modules if we show images
         hideModules: [],
         //List of valid file extensions, seperated by commas
-        validImageFileExtensions: 'bmp,jpg,gif,png',
+        validImageFileExtensions: 'bmp,jpg,jpeg,gif,png',
+        //Process notifications from MMM-PushBulletNotifications
+        processPushBulletNotifications: false
 	},
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
@@ -85,7 +87,7 @@ Module.register("MMM-ImageFileWatcher", {
             });
         }
         else {
-            //Show modules if modules were hid
+            //Show modules if modules were hidden
             if (self.config.hideModules.length > 0) {
                 var showOptions = { lockString: this.identifier };
 
@@ -114,22 +116,52 @@ Module.register("MMM-ImageFileWatcher", {
 
 	getStyles: function () {
 		return [];
-	},
+    },
 
-    socketNotificationReceived: function (notification, payload) {
-        var self = this;
-        console.log(notification + " " + payload);
+    //Check if we can handle this type of file based on extension, is it an image? 
+    checkValidImageFileExtension: function (filename, extensions) {
+        var extList = extensions.split(',');
+        for (var extIndex = 0; extIndex < extList.length; extIndex++) {
+            if (filename.toLowerCase().endsWith(extList[extIndex])) {
+                return true;
+            }
+        }
+        return false;
+    },
 
-        //Image is added to watch folder
-        if (notification === "FILE_ADDED") {            
-
+    addImage: function (imagePath) {
+        if (imagePath) {
             //Add image to list
-            this.imageList.push(payload);
+            this.imageList.push(imagePath);
 
             //Check if image is currently shown, if not update DOM
             if (!this.lock) {
-                self.updateDom();
-            }                              
+                this.updateDom();
+            }
         }
-	},
+    },
+
+    socketNotificationReceived: function (notification, payload) {        
+        console.log(notification + " " + payload);
+
+        //Image is added to watch folder
+        if (notification === "FILE_ADDED") {          
+            this.addImage(payload);
+        }
+    },
+
+    notificationReceived: function (notification, payload, sender) {                        
+        //Notification received from MMM-PushBulletNotifications: file uploaded
+        if (this.config.processPushBulletNotifications
+            && notification === 'PUSHBULLET_FILE_UPLOAD'
+            && sender && sender.name === 'MMM-PushBulletNotifications'
+            && this.checkValidImageFileExtension(payload.file_name, this.config.validImageFileExtensions)) {
+                //Logging
+                console.log(this.name + " received a module notification: " + notification + " from sender: " + sender.name);
+                console.log(sender.name + ' file upload: ' + payload.file_name);
+
+                //Add image to list, pass image_url to get online PusBullet image
+                this.addImage(payload.image_url);
+        }
+    },
 });

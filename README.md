@@ -3,6 +3,8 @@
 This [MagicMirror²](https://github.com/MichMich/MagicMirror/) module watches one or multiple directories, this module displays an image for a specified number of seconds if an image is added to the watched directory. 
 For example an image uploaded via SFTP from your phone.
 
+This module can also show images uploaded to PushBullet on your Mirror. Therefore install the [MMM-PushBulletNotifications](https://github.com/basknol/MMM-PushBulletNotifications) module and add the configuration option `processPushBulletNotifications` (in the MMM-ImageFileWatcher configuration) and set it to `true`.
+
 Inspired by the [MMM-ImageSlideshow](https://github.com/AdamMoses-GitHub/MMM-ImageSlideshow) module created by GitHub user [Adam Moses](https://github.com/AdamMoses-GitHub)
 
 ## Dependencies / Requirements
@@ -107,6 +109,14 @@ The following properties can be configured:
 				<br /><b>Default value:</b> <code>'bmp,jpg,gif,png'</code>
 				<br />This value is <b>OPTIONAL</b>
 			</td>
-		</tr>         
+		</tr>   
+		<tr>
+			<td><code>processPushBulletNotifications</code></td>
+			<td>Boolean value, show images uploaded to PushBullet (=true). This requires that the <a href="https://github.com/basknol/MMM-PushBulletNotifications">MMM-PushBulletNotifications</a> is installed.<br />
+				<br /><b>Example:</b> <code>true</code>
+				<br /><b>Default value:</b> <code>false</code>
+				<br />This value is <b>OPTIONAL</b>
+			</td>
+		</tr>   		
     </tbody>
 </table>
