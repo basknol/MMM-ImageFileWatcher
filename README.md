@@ -90,7 +90,7 @@ The following properties can be configured:
 			<td><code>mode</code></td>
 			<td>Two possible values: 'queue' or 'one_image'. In queue mode added images are shown one by one and each image is shown for the configured 'showtime'. In one_image mode only one image is shown, this is always the last image added to the directory. The image is directly shown when added to the directory.<br />
 				<br /><b>Example:</b> <code>one_image</code>
-				<br /><b>Default value:</b> <code>10000queuecode>
+				<br /><b>Default value:</b> <code>queue</code>
 				<br />This value is <b>OPTIONAL</b>
 			</td>
 		</tr>
