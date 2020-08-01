@@ -65,6 +65,7 @@ module.exports = NodeHelper.create({
                             }, 1000);
                         }
                     })
+                    .on('unlink', path => console.log(`File ${path} has been removed`))
                     .on('error', error => console.log(`MMM-ImageFileWacther error: ${error}`)); //Log errow
 
                 //Watching is set

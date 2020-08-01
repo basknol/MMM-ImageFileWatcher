@@ -12,6 +12,8 @@ Module.register("MMM-ImageFileWatcher", {
         fixedHeight: 500,        
         //If zero do nothing, otherwise set width to a pixel value
         fixedWidth: 0,
+        //queue, one_image
+        mode: 'queue',
         //Duration to show the images in milliseconds
         showtime: 10 * 1000,
         //Hide modules if we show images
@@ -37,7 +39,9 @@ Module.register("MMM-ImageFileWatcher", {
         var wrapper = document.createElement("div");
 
         //Check if we have images in list and if we are currently not showing an image (=lock)
-        if (this.lock === false && this.imageList.length > 0) {
+        if (this.imageList.length > 0 && ((this.lock === false) || (this.config.mode === 'one_image'))) {
+            console.log('Setting image');
+
             //Showing image, set lock
             this.lock = true;
 
@@ -79,12 +83,15 @@ Module.register("MMM-ImageFileWatcher", {
                 });
             }
 
-            //Show image for configured time
-            this.sleep(this.config.showtime).then(() => {            
-                //Finished showing image. Unlock and update DOM
-                self.lock = false;
-                self.updateDom();
-            });
+            //Only show item for configured time in queue mode
+            if (this.config.mode === 'queue') {
+                //Show image for configured time
+                this.sleep(this.config.showtime).then(() => {
+                    //Finished showing image. Unlock and update DOM
+                    self.lock = false;
+                    self.updateDom();
+                });
+            }
         }
         else {
             //Show modules if modules were hidden
@@ -131,11 +138,19 @@ Module.register("MMM-ImageFileWatcher", {
 
     addImage: function (imagePath) {
         if (imagePath) {
+            if (this.config.mode === 'one_image') {
+                //Clear list
+                this.imageList = [];
+            }
+
             //Add image to list
             this.imageList.push(imagePath);
 
             //Check if image is currently shown, if not update DOM
-            if (!this.lock) {
+            if (!this.lock && this.config.mode === 'queue') {
+                this.updateDom();
+            }
+            else if (this.config.mode === 'one_image') {
                 this.updateDom();
             }
         }
